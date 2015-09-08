@@ -1,0 +1,21 @@
+<section class="hotelInfo">
+  <div class="hotel" ng-model="hotels">
+    <a href="#/hotels/{{prevItem}}" class="btn btn-left">&lt;</a>
+    <a href="#/hotels/{{nextItem}}" class="btn btn-right">&gt;</a>
+    <h1>{{hotels[currItem].name}}</h1>
+    <div class="info">
+      <h3><span class="city">{{hotels[currItem].city}}</span> , 
+          <span class="region">{{hotels[currItem].region}}</span>
+      </h3>
+      <div id="hotel_content" class="row">
+        <div id="hotel_image" class="col-sm-5">
+          <img ng-src="img/{{hotels[currItem].shortname}}_tn.jpg" alt="Photo of {{hotels[currItem].name}}">
+        </div>
+        <div id="hotel_description" class="col-sm-7">        
+          {{hotels[currItem].description}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#/hotels">&laquo; Back to search</a>
+</section>

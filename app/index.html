@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+
+  <link rel="stylesheet" href="dist/css/app.css">
+
+</head>
+
+<body>
+  <div id="page_wrap">
+
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#/hotels">All Hotels</a></li>
+      
+    </ul>
+    <div class="main" ng-view></div>
+
+  </div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="dist/scripts/app.js"></script>
+
+</body>
+</html>

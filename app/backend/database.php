@@ -7,8 +7,6 @@ class PDO_database {
 	public function __construct() {
 		
 		$this->open_connection();
-		//$this->magic_quotes_active = get_magic_quotes_gpc();
-		//$this->real_escape_string_exists = function_exists( "mysql_real_escape_string" );
 
 		
 	}
@@ -27,6 +25,10 @@ class PDO_database {
     		echo 'Connection failed: ' . $e->getMessage();
 		}
 
+	}
+
+	public function get_connection() {
+		return $this->conn;
 	}
 
 	public function close_connection() {

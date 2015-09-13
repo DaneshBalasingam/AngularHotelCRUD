@@ -4,14 +4,14 @@ var hotelControllers = angular.module('hotelControllers',[]);
 
 hotelControllers.controller('ListHotelController', ['$scope', '$http', function($scope, $http) {
 
-  $http.get('backend/hotels.php').success(function(data) {
+  $http.get('backend/hotels_facade.php').success(function(data) {
     $scope.hotels = data;
     $scope.hotelOrder = 'name';
   });
 }]);
 
 hotelControllers.controller('SingleHotelController', ['$scope', '$http','$routeParams', function($scope, $http, $routeParams) {
-  $http.get('backend/hotels.php').success(function(data) {
+  $http.get('backend/hotels_facade.php').success(function(data) {
     $scope.hotels = data;
     $scope.currItem = $routeParams.itemId;
 
@@ -28,6 +28,21 @@ hotelControllers.controller('SingleHotelController', ['$scope', '$http','$routeP
     }
 
   });
+}]);
+
+hotelControllers.controller('CreateHotelController', ['$scope', '$http', function($scope, $http ) {
+
+
+    $scope.saveHotel=function(){
+        if( $scope.hotelForm.$valid) {
+
+           console.log($scope.hotelForm.excerpt);
+        
+        } else {
+        console.log('unable to save. Validation error');
+        }       
+    }  
+  
 }]);
 
  /* hotelControllers.controller('ListHotelController', ['$scope', '$http', '$location', '$state' , 

@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', [
+/*var myApp = angular.module('myApp', [
   'ngRoute',
   'hotelControllers'
 ]);
@@ -20,9 +20,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
   otherwise({
     redirectTo: '/'
   });
-}]);
+}]);*/
 
-/*angular.module('myApp.hotels',['myApp.hotels.controllers']);
+angular.module('myApp.hotels',['ngRoute', 'myApp.hotels.controllers']);
 
 angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider) {
   $routeProvider.
@@ -41,7 +41,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
   otherwise({
     redirectTo: '/'
   });
-}]);*/
+}]);
 
 /*var myApp = angular.module('myApp', [
   'hotelControllers',

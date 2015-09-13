@@ -1,3 +1,3 @@
-/*angular.module('myApp', [
+angular.module('myApp', [
   'myApp.hotels'
-]);*/
+]);

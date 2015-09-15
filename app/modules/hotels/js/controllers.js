@@ -36,10 +36,32 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
     $scope.saveHotel=function(){
         if( $scope.hotelForm.$valid) {
 
-           console.log($scope.hotelForm.excerpt);
+            var url = 'backend/hotels_facade.php';
+
+            var imageUpload = document.querySelector("#FormHotelImage");
+            var file = imageUpload.files[0];
+
+            var fd = new FormData();
+            fd.append('name', $scope.hotel.name);
+            fd.append('city', $scope.hotel.city);
+            fd.append('region', $scope.hotel.region);
+            fd.append("image",file, file.name);
+            fd.append('shortname', $scope.hotel.shortname);
+            fd.append('description', $scope.hotel.description);
+            fd.append('excerpt', $scope.hotel.excerpt);
+            
+            $http.post(url, fd, {
+              transformRequest: angular.identity,
+              headers: {'Content-Type': undefined}
+            }).then(function(response) {
+               console.log(response.data);
+            }, function(response) {
+              
+            });
+           
         
         } else {
-        console.log('unable to save. Validation error');
+          console.log('unable to save. Validation error');
         }       
     }  
   

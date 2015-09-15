@@ -1,18 +1,19 @@
 <?php
 
 	require_once("initialize.php");
-	require_once("hotels.php");
 
 	$db = new PDO_database();
 
-	//$new_hotel = Hotel::create($db, 'hotel 3', 'auckland', 'auckland region', 'hotel_3', 'a typical hotel', 'blah blah');
+	$method = $_SERVER['REQUEST_METHOD'];
 
-	//$db->close_connection();
+	if ($method == 'POST') {
 
-	//echo $new_hotel;
-	if (isset($_POST['submit'])) {
+		$image_file = $_FILES['image'];
+		$target_file = $image_filename = Image::upload($image_file);
 
-		
+		Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], $_POST['shortname'], $_POST['description'], $_POST['excerpt']);
+		$db->close_connection();
+		echo "success";
 
 	} else {
 		

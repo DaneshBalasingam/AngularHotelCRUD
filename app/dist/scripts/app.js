@@ -21729,6 +21729,10 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/createHotel.html',
     controller: 'CreateHotelController'
   }).
+  when('/updateHotel', {
+    templateUrl: 'modules/hotels/views/updateHotel.html',
+    controller: 'UpdateHotelController'
+  }).
   otherwise({
     redirectTo: '/'
   });
@@ -21823,6 +21827,42 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
 }]);
 
 
+angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', function($scope, $http) {
+
+    $scope.updateHotel=function(){
+        if( $scope.hotelForm.$valid) {
+
+            var url = 'backend/hotels_facade.php/1';
+
+            var imageUpload = document.querySelector("#FormHotelImage");
+            var file = imageUpload.files[0];
+
+            var fd = new FormData();
+            fd.append('name', $scope.hotel.name);
+            fd.append('city', $scope.hotel.city);
+            fd.append('region', $scope.hotel.region);
+            fd.append("image",file, file.name);
+            fd.append('shortname', $scope.hotel.shortname);
+            fd.append('description', $scope.hotel.description);
+            fd.append('excerpt', $scope.hotel.excerpt);
+            
+            $http.put(url, fd, {
+              transformRequest: angular.identity,
+              headers: {'Content-Type': undefined}
+            }).then(function(response) {
+               console.log(response.data);
+            }, function(response) {
+              
+            });
+           
+        
+        } else {
+          console.log('unable to save. Validation error');
+        }       
+    }
+
+
+}]);
 
 /*var hotelControllers = angular.module('myApp.hotels.controllers',[]);
 

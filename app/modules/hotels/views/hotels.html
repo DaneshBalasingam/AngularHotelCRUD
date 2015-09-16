@@ -32,7 +32,7 @@
   	<ul class="hotelList">
   	    <li class="singleHotelList  clearfix" ng-repeat="hotel in hotels | filter: query | orderBy: hotelOrder:direction">
   		    <a href="#/hotels/{{hotels.indexOf(hotel)}}">
-  		        <img ng-src="img/{{hotel.shortname}}_tn.jpg" alt="Photo of {{hotel.name}}">
+  		        <img ng-src="backend/uploads/{{hotel.image_name}}" alt="Photo of {{hotel.name}}">
   		        <div class="info">
   		          <h2>{{hotel.name}}</h2>
   		          <h3><span class="city">{{hotel.city}}</span>,<span class="region">{{hotel.region}}</span></h3>

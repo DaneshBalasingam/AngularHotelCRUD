@@ -38,6 +38,10 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/createHotel.html',
     controller: 'CreateHotelController'
   }).
+  when('/updateHotel', {
+    templateUrl: 'modules/hotels/views/updateHotel.html',
+    controller: 'UpdateHotelController'
+  }).
   otherwise({
     redirectTo: '/'
   });

@@ -1,6 +1,6 @@
-<div class="row" ng-controller="CreateHotelController">
+<div class="row" ng-controller="UpdateHotelController">
     <div class="col-xs-8">
-        <form name="hotelForm" ng-submit="saveHotel()" enctype="multipart/form-data" class="form-horizontal" novalidate role="form">
+        <form name="hotelForm" ng-submit="updateHotel()" enctype="multipart/form-data" class="form-horizontal" novalidate role="form">
 			<div class="form-group" ng-class="{'has-error':hotelForm.name.$dirty && hotelForm.name.$invalid}">
 			    <label for="name" class="col-sm-2 control-label">Hotel Name</label>
 			    <div class="col-sm-10">
@@ -52,7 +52,7 @@
 			</div>
 			<div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
-			        <button type="submit" name="submit" class="btn btn-success" ng-disabled="hotelForm.$invalid">Create Hotel</button>
+			        <button type="submit" name="submit" class="btn btn-success" ng-disabled="hotelForm.$invalid">Update Hotel</button>
 			    </div>
 			</div>           
         </form>		  

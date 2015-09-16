@@ -11,11 +11,16 @@
 		$image_file = $_FILES['image'];
 		$target_file = $image_filename = Image::upload($image_file);
 
-		Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], $_POST['shortname'], $_POST['description'], $_POST['excerpt']);
+		Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], 
+		           $_POST['shortname'], $_POST['description'], $_POST['excerpt'], 
+		           $target_file);
 		$db->close_connection();
-		echo "success";
+		echo "SAVE";	
 
-	} else {
+	} elseif ($method == 'PUT') {
+		echo "PUT";
+
+	}else {
 		
 		$outp = Hotel::get_all($db);
 	

@@ -2,6 +2,7 @@ logs/*
 !.gitkeep
 /node_modules
 /app/public/img
+/app/backend/uploads
 tmp
 .DS_Store
 .idea

@@ -10,7 +10,9 @@ gulp.task('scripts', function(){
 		'app/lib/angular/angular-ui-router.min.js',
 		'app/js/app.js',
 		'app/modules/hotels/hotelModule.js',
-		'app/modules/hotels/js/controllers.js'
+		'app/modules/hotels/js/controllers.js',
+		'app/modules/images/imageModule.js',
+		'app/modules/images/js/controllers.js'
 
 	])
 	.pipe(concat('app.js'))
@@ -23,7 +25,8 @@ gulp.task('styles', function(){
 		'app/css/reset.css',
 		'app/css/bootstrap.min.css',
 		'app/css/app.css',
-		'app/modules/hotels/css/hotels.css'
+		'app/modules/hotels/css/hotels.css',
+		'app/modules/images/css/images.css'
 
 	])
 	.pipe(concat('app.css'))

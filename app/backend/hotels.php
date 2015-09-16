@@ -32,22 +32,47 @@ class Hotel {
     public static function create($db, $hotel_name, $hotel_city, $hotel_region, $hotel_shortname, 
     	                          $hotel_desc, $hotel_excerpt, $image_name) {
 			
-			$stmt = $db->get_connection()
-			        ->prepare("INSERT INTO hotels ( name, city, region, shortname, description, excerpt, image_name )
-				               VALUES ( :name, :city, :region, :shortname, :description, :excerpt, :image_name )");
+		$stmt = $db->get_connection()
+		        ->prepare("INSERT INTO hotels ( name, city, region, shortname, description, excerpt, image_name )
+			               VALUES ( :name, :city, :region, :shortname, :description, :excerpt, :image_name )");
 
-			$stmt->bindParam(':name', $hotel_name);
-			$stmt->bindParam(':city', $hotel_city);
-			$stmt->bindParam(':region', $hotel_region);
-			$stmt->bindParam(':shortname', $hotel_shortname);
-			$stmt->bindParam(':description', $hotel_desc);
-			$stmt->bindParam(':excerpt', $hotel_excerpt);
-			$stmt->bindParam(':image_name', $image_name);
+		$stmt->bindParam(':name', $hotel_name);
+		$stmt->bindParam(':city', $hotel_city);
+		$stmt->bindParam(':region', $hotel_region);
+		$stmt->bindParam(':shortname', $hotel_shortname);
+		$stmt->bindParam(':description', $hotel_desc);
+		$stmt->bindParam(':excerpt', $hotel_excerpt);
+		$stmt->bindParam(':image_name', $image_name);
 
-			$stmt->execute();
+		$stmt->execute();
 
-			return 'success';
+		return 'success';
 	    
+	}
+
+	public static function update ($db, $hotel_id, $hotel_name, $hotel_city, $hotel_region, $hotel_shortname, 
+    	                          $hotel_desc, $hotel_excerpt, $image_name) {
+
+		$stmt = $db->get_connection()
+		        ->prepare("UPDATE hotels
+		        	       SET name = :name, city = :city, region = :region, shortname = :shortname,
+		        	           description = :description, excerpt = :excerpt, image_name = :image_name 
+		        	       WHERE hotel_id = :hotel_id");
+
+		$stmt->bindParam(':name', $hotel_name);
+		$stmt->bindParam(':city', $hotel_city);
+		$stmt->bindParam(':region', $hotel_region);
+		$stmt->bindParam(':shortname', $hotel_shortname);
+		$stmt->bindParam(':description', $hotel_desc);
+		$stmt->bindParam(':excerpt', $hotel_excerpt);
+		$stmt->bindParam(':image_name', $image_name);
+		$stmt->bindParam(':hotel_id', $hotel_id);
+
+		$stmt->execute();
+
+		return 'success';
+
+
 	}
 
 

@@ -21689,30 +21689,6 @@ angular.module('myApp', [
 ]);
 
 
-/*var myApp = angular.module('myApp', [
-  'ngRoute',
-  'hotelControllers'
-]);
-
-myApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
-  when('/hotels', {
-    templateUrl: 'modules/hotels/views/hotels.html',
-    controller: 'ListHotelController'
-  }).
-  when('/hotels/:itemId', {
-    templateUrl: 'modules/hotels/views/singleHotel.html',
-    controller: 'SingleHotelController'
-  }).
-  when('/createHotel', {
-    templateUrl: 'modules/hotels/views/createHotel.html',
-    controller: 'CreateHotelController'
-  }).
-  otherwise({
-    redirectTo: '/'
-  });
-}]);*/
-
 angular.module('myApp.hotels',['ngRoute', 'myApp.hotels.controllers']);
 
 angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider) {
@@ -21729,7 +21705,11 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/createHotel.html',
     controller: 'CreateHotelController'
   }).
-  when('/updateHotel', {
+  when('/adminHotel', {
+    templateUrl: 'modules/hotels/views/adminHotel.html',
+    controller: 'AdminHotelController'
+  }).
+  when('/updateHotel/:itemId', {
     templateUrl: 'modules/hotels/views/updateHotel.html',
     controller: 'UpdateHotelController'
   }).
@@ -21738,25 +21718,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
   });
 }]);
 
-/*var myApp = angular.module('myApp', [
-  'hotelControllers',
-  'ui.router'
-]);
 
-myApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider' , 
-    function($stateProvider, $urlRouterProvider, $locationProvider ) {
-      $stateProvider.state('/hotels', {
-        url: '/hotels',
-        templateUrl: 'modules/hotels/views/hotels.html',
-        controller: 'ListHotelController'
-      }).
-      state('hotels', {
-        url: '/hotels/:itemId',
-        templateUrl: 'modules/hotels/views/singleHotel.html',
-        controller: 'SingleHotelController'
-      });
-      $urlRouterProvider.otherwise('/hotels');
-}]);*/
 'use strict'
 
 angular.module('myApp.hotels.controllers',[]);
@@ -21767,9 +21729,25 @@ angular.module('myApp.hotels.controllers').controller('ListHotelController', ['$
     $scope.hotels = data;
     $scope.hotelOrder = 'name';
   });
-}]);
 
-angular.module('myApp.hotels.controllers').controller('SingleHotelController', ['$scope', '$http','$routeParams', function($scope, $http, $routeParams) {
+}]); 
+
+angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
+
+    $http.get('backend/hotels_facade.php').success(function(data) {
+      $scope.hotels = data;
+    });
+
+    $scope.editHotel=function(hotelId){
+      $location.path('/updateHotel/' + hotelId);
+    }
+
+}]);  
+
+angular.module('myApp.hotels.controllers').controller('SingleHotelController', ['$scope', '$http','$routeParams', 
+  function($scope, $http, $routeParams) {
+
   $http.get('backend/hotels_facade.php').success(function(data) {
     $scope.hotels = data;
     $scope.currItem = $routeParams.itemId;
@@ -21827,7 +21805,8 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
 }]);
 
 
-angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', function($scope, $http) {
+angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', '$routeParams', 
+  function($scope, $http,  $routeParams) {
 
     $scope.updateHotel=function(){
         if( $scope.hotelForm.$valid) {
@@ -21838,6 +21817,7 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
             var file = imageUpload.files[0];
 
             var fd = new FormData();
+            fd.append('hotel_id', $routeParams.itemId);
             fd.append('name', $scope.hotel.name);
             fd.append('city', $scope.hotel.city);
             fd.append('region', $scope.hotel.region);
@@ -21864,59 +21844,5 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
 
 }]);
 
-/*var hotelControllers = angular.module('myApp.hotels.controllers',[]);
-
-hotelControllers.controller('ListHotelController', ['$scope', '$http', function($scope, $http) {
-
-  $http.get('backend/hotels_facade.php').success(function(data) {
-    $scope.hotels = data;
-    $scope.hotelOrder = 'name';
-  });
-}]);
-
-hotelControllers.controller('SingleHotelController', ['$scope', '$http','$routeParams', function($scope, $http, $routeParams) {
-  $http.get('backend/hotels_facade.php').success(function(data) {
-    $scope.hotels = data;
-    $scope.currItem = $routeParams.itemId;
-
-    if ($routeParams.itemId > 0) {
-      $scope.prevItem = Number($routeParams.itemId)-1;
-    } else {
-      $scope.prevItem = $scope.hotels.length-1;
-    }
-
-    if ($routeParams.itemId < $scope.hotels.length-1) {
-      $scope.nextItem = Number($routeParams.itemId)+1;
-    } else {
-      $scope.nextItem = 0;
-    }
-
-  });
-}]);
-
-hotelControllers.controller('CreateHotelController', ['$scope', '$http', function($scope, $http ) {
 
 
-    $scope.saveHotel=function(){
-        if( $scope.hotelForm.$valid) {
-
-           console.log($scope.hotelForm.excerpt);
-        
-        } else {
-        console.log('unable to save. Validation error');
-        }       
-    }  
-  
-}]);*/
-
- /* hotelControllers.controller('ListHotelController', ['$scope', '$http', '$location', '$state' , 
-    function($scope, $http, $location, $state) {
-
-        $http.get('backend/hotels.php').success(function(data) {
-          $state.go('hotels', {
-            $scope.hotels = data;
-            $scope.hotelOrder = 'name';
-          });
-        
-    });
-  }]);*/

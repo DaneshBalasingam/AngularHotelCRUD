@@ -1,4 +1,5 @@
 angular.module('myApp', [
-  'myApp.hotels'
+  'myApp.hotels',
+  'myApp.images'
 ]);
 

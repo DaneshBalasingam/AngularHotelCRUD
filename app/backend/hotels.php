@@ -30,11 +30,11 @@ class Hotel {
     }
 
     public static function create($db, $hotel_name, $hotel_city, $hotel_region, $hotel_shortname, 
-    	                          $hotel_desc, $hotel_excerpt, $image_name) {
+    	                          $hotel_desc, $hotel_excerpt, $image_id) {
 			
 		$stmt = $db->get_connection()
 		        ->prepare("INSERT INTO hotels ( name, city, region, shortname, description, excerpt, image_name )
-			               VALUES ( :name, :city, :region, :shortname, :description, :excerpt, :image_name )");
+			               VALUES ( :name, :city, :region, :shortname, :description, :excerpt, :image_id )");
 
 		$stmt->bindParam(':name', $hotel_name);
 		$stmt->bindParam(':city', $hotel_city);
@@ -42,7 +42,7 @@ class Hotel {
 		$stmt->bindParam(':shortname', $hotel_shortname);
 		$stmt->bindParam(':description', $hotel_desc);
 		$stmt->bindParam(':excerpt', $hotel_excerpt);
-		$stmt->bindParam(':image_name', $image_name);
+		$stmt->bindParam(':image_id', $image_id);
 
 		$stmt->execute();
 

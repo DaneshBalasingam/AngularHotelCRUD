@@ -8,6 +8,7 @@ gulp.task('scripts', function(){
 		'app/lib/angular/angular.js',
 		'app/lib/angular/angular-route.js',
 		'app/lib/angular/angular-ui-router.min.js',
+		'app/lib/jquery/jquery.min.js',
 		'app/js/app.js',
 		'app/modules/hotels/hotelModule.js',
 		'app/modules/hotels/js/controllers.js',

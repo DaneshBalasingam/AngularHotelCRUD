@@ -1,0 +1,29 @@
+<div id="lightbox_image" class="lightbox" ng-controller="UploadImageController">
+
+	<div id="close_image_lightbox" ng-click="closeImageLightbox()" class="close_lightbox">X</div>
+			    
+	<div id="upload_image_form" >
+		<form name="imageForm" ng-submit="saveImage()" enctype="multipart/form-data" class="form-horizontal" novalidate role="form">
+			<div class="form-group">
+				<label for="image" class="col-sm-2 control-label">Image Upload </label>
+				<div class="col-sm-10">
+					<input type="file" name="file_upload" class="form-control" id="image_upload">
+				</div>
+			</div>
+			<div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			        <button type="submit" name="submit" class="btn btn-success" >Upload Image</button>
+			    </div>
+			</div>  
+		</form>
+	</div>
+	<div id="set_image_button" ng-click="setImage()" >
+		Set Image
+	</div>
+	<div id="imageListDisplay">
+
+		<img class="image" ng-repeat="image in images" ng-src="backend/uploads/{{image.name}}"
+		   data-imageId="{{image.id}}" data-imageName="{{image.name}}">
+
+	</div>
+</div>

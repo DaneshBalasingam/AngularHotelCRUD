@@ -1,6 +1,6 @@
 <div class="row" ng-controller="CreateHotelController">
     <div class="col-xs-8">
-        <form name="hotelForm" ng-submit="saveHotel()" enctype="multipart/form-data" class="form-horizontal" novalidate role="form">
+        <form name="hotelForm" ng-submit="saveHotel()" class="form-horizontal" novalidate role="form">
 			<div class="form-group" ng-class="{'has-error':hotelForm.name.$dirty && hotelForm.name.$invalid}">
 			    <label for="name" class="col-sm-2 control-label">Hotel Name</label>
 			    <div class="col-sm-10">
@@ -23,10 +23,12 @@
 			    </div>
 			</div>
 			<div class="form-group" ng-class="{'has-error':hotelForm.image.$dirty && hotelForm.image.$invalid}">
-				<label for="image" class="col-sm-2 control-label">Image Upload </label>
+				<label id="set_image_button" class="col-sm-2 control-label" ng-click="setImage()" >Add Image</label>
 				<div class="col-sm-10">
-					<input type="file" name="file_upload" ng-required="true" class="form-control" id="FormHotelImage">
-					<span class="error-message" ng-show="hotelForm.image.$dirty && hotelForm.image.$invalid">RImage is mandatory!</span>
+					<img id="selected_image" src="backend/uploads/no-image.jpg">
+					<input name="hotel_image" ng-model="hotel.image" type="hidden" value="" ng-required="true" class="form-control" 
+					id="hotel_image">
+					<span class="error-message" ng-show="hotelForm.image.$dirty && hotelForm.image.$invalid">Image is mandatory!</span>
 				</div>
 			</div>
 			<div class="form-group" ng-class="{'has-error':hotelForm.shortname.$dirty && hotelForm.shortname.$invalid}">
@@ -58,4 +60,7 @@
         </form>		  
 	</div>	  
 	<div>{{ hotel }}</div>
+</div>
+<div id="setImageLightbox">
+  <div ng-include="'modules/images/views/uploadImageLightbox.html'"></div>
 </div>

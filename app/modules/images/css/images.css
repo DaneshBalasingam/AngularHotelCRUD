@@ -1,0 +1,19 @@
+#set_image_button {
+	cursor: pointer;
+}
+
+#close_image_lightbox {
+	cursor: pointer;
+}
+
+#setImageLightbox {
+	display: none;
+}
+
+.image {
+	cursor: pointer;
+}
+
+.image_selected {
+	border: solid 2px red;
+}

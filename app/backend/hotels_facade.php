@@ -8,12 +8,9 @@
 
 	if ($method == 'POST') {
 
-		$image_file = $_FILES['image'];
-		$target_file = $image_filename = Image::upload($image_file);
-
 		Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], 
 		           $_POST['shortname'], $_POST['description'], $_POST['excerpt'], 
-		           $target_file);
+		           $_POST['image']);
 		$db->close_connection();
 		echo "SAVE";	
 

@@ -1,4 +1,4 @@
-angular.module('myApp.images',['ngRoute', 'myApp.images.controllers']);
+angular.module('myApp.images',['ngRoute', 'ngResource', 'myApp.images.controllers', 'myApp.images.services']);
 
 angular.module('myApp.images').config(['$routeProvider', function($routeProvider) {
   $routeProvider.

@@ -9,6 +9,7 @@
 	if ($method == 'POST') {
 
 		$image_file = $_FILES['image'];
+		//$image_file = $_FILES['name'];
 		$image_id = Image::upload($db, $image_file);
 
 		$db->close_connection();

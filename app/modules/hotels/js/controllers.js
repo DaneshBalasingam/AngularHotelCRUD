@@ -2,21 +2,18 @@
 
 angular.module('myApp.hotels.controllers',[]);
 
-angular.module('myApp.hotels.controllers').controller('ListHotelController', ['$scope', '$http', function($scope, $http) {
+angular.module('myApp.hotels.controllers').controller('ListHotelController', ['$scope', 'Hotel',
+  function($scope, Hotel) {
 
-  $http.get('backend/hotels_facade.php').success(function(data) {
-    $scope.hotels = data;
+    $scope.hotels = Hotel.query();
     $scope.hotelOrder = 'name';
-  });
 
 }]); 
 
-angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['$scope', '$http', '$location',
-  function($scope, $http, $location) {
+angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['$scope', '$location', 'Hotel',
+  function($scope, $location, Hotel) {
 
-    $http.get('backend/hotels_facade.php').success(function(data) {
-      $scope.hotels = data;
-    });
+    $scope.hotels = Hotel.query();
 
     $scope.editHotel=function(hotelId){
       $location.path('/updateHotel/' + hotelId);
@@ -46,10 +43,10 @@ angular.module('myApp.hotels.controllers').controller('SingleHotelController', [
   });
 }]);
 
-angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', function($scope, $http ) {
+angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', 'Hotel', 'Image',
+    function($scope, $http, Hotel, Image ) {
 
-    $http.get('backend/images_facade.php').success(function(data) {
-      $scope.images = data;
+      $scope.images = Image.query();
 
       $(document).on('click', '.image', function(e) {
 
@@ -57,12 +54,15 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
 
           $(this).addClass("image_selected");
 
-          $('#hotel_image').val($(this).attr('data-imageId'));
+          $('#FormHotelImage').val($(this).attr('data-imageId'));
+
+          $scope.image = $(this).attr('data-imageId');
 
           var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
           $('#selected_image').attr('src', selected_image);    
         });
-    });
+
+
 
     $scope.setImage = function(){
         
@@ -80,7 +80,7 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
 
     $scope.saveImage = function () {
 
-        var url = 'backend/images_facade.php';
+        /*var url = 'backend/images_facade.php';
 
         var imageUpload = document.querySelector("#image_upload");
         var file = imageUpload.files[0];
@@ -97,42 +97,21 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
                 });
             }, function(response) {
               
-        });
+        });*/
         
     }
 
     $scope.saveHotel=function(){
+
         if( $scope.hotelForm.$valid) {
-
-            var url = 'backend/hotels_facade.php';
-
-            /*var imageUpload = document.querySelector("#FormHotelImage");
-            var file = imageUpload.files[0];*/
-
-            var fd = new FormData();
-            fd.append('name', $scope.hotel.name);
-            fd.append('city', $scope.hotel.city);
-            fd.append('region', $scope.hotel.region);
-            fd.append("image", $scope.hotel.image);
-            fd.append('shortname', $scope.hotel.shortname);
-            fd.append('description', $scope.hotel.description);
-            fd.append('excerpt', $scope.hotel.excerpt);
-            
-            $http.post(url, fd, {
-              transformRequest: angular.identity,
-              headers: {'Content-Type': undefined}
-            }).then(function(response) {
-               console.log(response.data);
-
-            }, function(response) {
-              
-            });
-           
-        
+            Hotel.create($scope.hotel);
         } else {
           console.log('unable to save. Validation error');
-        }       
-    }  
+        }
+
+    }
+
+
   
 }]);
 
@@ -143,7 +122,7 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
     $scope.updateHotel=function(){
         if( $scope.hotelForm.$valid) {
 
-            var url = 'backend/hotels_facade.php/1';
+            var url = 'backend/hotels_facade.php/8';
 
             var imageUpload = document.querySelector("#FormHotelImage");
             var file = imageUpload.files[0];

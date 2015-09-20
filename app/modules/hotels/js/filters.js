@@ -1,3 +1,3 @@
 'use strict'
 
-angular.module('spBlogger.posts.filters',[]);
+angular.module('myApp.hotels.filters',[]);

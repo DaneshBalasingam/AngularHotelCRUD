@@ -1,4 +1,5 @@
-angular.module('myApp.hotels',['ngRoute', 'myApp.hotels.controllers']);
+angular.module('myApp.hotels',['ngRoute', 'ngResource', 'myApp.hotels.controllers', 
+               'myApp.hotels.directives','myApp.hotels.services','myApp.hotels.filters']);
 
 angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider) {
   $routeProvider.

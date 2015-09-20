@@ -1,16 +1,12 @@
 'use strict'
 
-angular.module('spBlogger.posts.services', []).factory('postService', function() {
-  return {
-    getAll: function() {
-      return this.posts;
-    },
-    getPostById: function(id) {
-      for (var i in this.posts) {
-        if (this.posts[i].id == id) {
-          return this.posts[i];
-        }
-      }
-    },
-  }
-});
+angular.module('myApp.hotels.services', []);
+
+angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function($resource) {
+
+    return $resource('backend/hotels_facade.php', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST'}
+    })
+
+}]); 

@@ -24,7 +24,13 @@ class Hotel {
 
     public static function get_all($db) {
 
-    	$result = $db->query("SELECT * FROM hotels");
+    	$result = $db->query("SELECT hotels.id, hotels.region, hotels.city, 
+    		                  hotels.shortname, hotels.description, hotels.excerpt, 
+    		                  images.name as image_name  
+							  FROM hotels 
+							  INNER JOIN images 
+							  ON hotels.image_id = images.id");
+    	
 	
 		return $result->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -33,7 +39,7 @@ class Hotel {
     	                          $hotel_desc, $hotel_excerpt, $image_id) {
 			
 		$stmt = $db->get_connection()
-		        ->prepare("INSERT INTO hotels ( name, city, region, shortname, description, excerpt, image_name )
+		        ->prepare("INSERT INTO hotels ( name, city, region, shortname, description, excerpt, image_id )
 			               VALUES ( :name, :city, :region, :shortname, :description, :excerpt, :image_id )");
 
 		$stmt->bindParam(':name', $hotel_name);
@@ -57,7 +63,7 @@ class Hotel {
 		        ->prepare("UPDATE hotels
 		        	       SET name = :name, city = :city, region = :region, shortname = :shortname,
 		        	           description = :description, excerpt = :excerpt, image_name = :image_name 
-		        	       WHERE hotel_id = :hotel_id");
+		        	       WHERE id = :hotel_id");
 
 		$stmt->bindParam(':name', $hotel_name);
 		$stmt->bindParam(':city', $hotel_city);

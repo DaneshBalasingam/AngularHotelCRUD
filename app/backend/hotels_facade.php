@@ -8,11 +8,19 @@
 
 	if ($method == 'POST') {
 
-		Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], 
+		$request = file_get_contents('php://input');
+		$input = json_decode($request);
+
+		Hotel::create($db, $input->name, $input->city, $input->region, 
+		           $input->shortname, $input->description, $input->excerpt, 
+		           $input->imageId);
+
+		/*Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], 
 		           $_POST['shortname'], $_POST['description'], $_POST['excerpt'], 
-		           $_POST['image']);
+		           $_POST['image']);*/
 		$db->close_connection();
-		echo "SAVE";	
+		echo "saved";
+		//echo $_POST['name'];	
 
 	} elseif ($method == 'PUT') {
 		$image_file = $_FILES['image'];

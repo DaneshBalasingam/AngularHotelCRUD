@@ -21784,68 +21784,50 @@ angular.module('myApp.hotels.controllers').controller('SingleHotelController', [
   });
 }]);
 
-angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', 'Hotel', 'Image',
-    function($scope, $http, Hotel, Image ) {
+angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', 'Hotel', 'Image', 
+    'imageUploadService', 'imageLightboxService',
+    function($scope, $http, Hotel, Image, imageUploadService, imageLightboxService ) {
 
-      $scope.images = Image.query();
+    $scope.images = Image.query();
 
-      $(document).on('click', '.image', function(e) {
+    var hotel_image = " ";
 
-          $(".image").removeClass("image_selected");
+    /*$(document).on('click', '.image', function(e) {
 
-          $(this).addClass("image_selected");
+        $(".image").removeClass("image_selected");
 
-          $('#FormHotelImage').val($(this).attr('data-imageId'));
+        $(this).addClass("image_selected");
 
-          $scope.image = $(this).attr('data-imageId');
+        $('#FormHotelImage').val($(this).attr('data-imageId'));
+        hotel_image = $(this).attr('data-imageId');
 
-          var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
-          $('#selected_image').attr('src', selected_image);    
-        });
+        var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
+        $('#selected_image').attr('src', selected_image);    
+      });*/
 
+    imageLightboxService.toggleLightbox($(document), $scope);
 
-
-    $scope.setImage = function(){
-        
-        $("document").ready(function() {
-            $('#setImageLightbox').toggle();
-        });
-        
-    }
-
-    $scope.closeImageLightbox = function(){
-        $("document").ready(function() {
-            $('#setImageLightbox').toggle();
-        });
-    }
 
     $scope.saveImage = function () {
-
-        /*var url = 'backend/images_facade.php';
 
         var imageUpload = document.querySelector("#image_upload");
         var file = imageUpload.files[0];
 
-        var fd = new FormData();
-        fd.append("image",file, file.name);
-
-        $http.post(url, fd, {
-              transformRequest: angular.identity,
-              headers: {'Content-Type': undefined}
-            }).then(function(response) {
-                $http.get('backend/images_facade.php').success(function(data) {
-                  $scope.images = data;
-                });
+        imageUploadService.uploadImage(file).then(function(response){
+              $scope.images = response;
             }, function(response) {
-              
-        });*/
+
+        });
         
     }
 
     $scope.saveHotel=function(){
-
+       
         if( $scope.hotelForm.$valid) {
-            Hotel.create($scope.hotel);
+             $scope.hotel.imageId = hotel_image;
+            console.log($scope.hotel);
+            var test = Hotel.create($scope.hotel);
+            console.log(test);
         } else {
           console.log('unable to save. Validation error');
         }
@@ -21917,6 +21899,8 @@ angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function(
     })
 
 }]); 
+
+
 angular.module('myApp.images',['ngRoute', 'ngResource', 'myApp.images.controllers', 'myApp.images.services']);
 
 angular.module('myApp.images').config(['$routeProvider', function($routeProvider) {
@@ -21950,8 +21934,78 @@ angular.module('myApp.images.services').factory('Image', ['$resource', function(
 
 }]);
 
-angular.module('myApp.images.services').factory('ImageUploadService', ['$http', function($http) {
+angular.module('myApp.images.services').factory('imageUploadService', ['$http', function($http) {
+	
+	var uploadImage = function (file){
 
-    //this.post = function
+		var url = 'backend/images_facade.php';
 
-}]);  
+       var fd = new FormData();
+        fd.append("image",file, file.name);
+
+        return $http.post(url, fd, {
+              transformRequest: angular.identity,
+              headers: {'Content-Type': undefined}
+            }).then(function(response) {
+
+            	return response.data;
+              
+        });
+
+        
+	};
+
+	return {
+    	uploadImage: uploadImage
+  	};
+
+
+}]);
+
+angular.module('myApp.images.services').factory('imageLightboxService', [function() {
+
+    var toggleLightbox = function(doc, scp) {
+
+        scp.setImage = function (){
+          doc.ready(function() {
+              $('#setImageLightbox').toggle();
+          });
+
+        }
+        
+
+        scp.showImageLightbox = function (){
+          doc.ready(function() {
+              $('#setImageLightbox').toggle();
+          });
+
+        }
+
+        scp.closeImageLightbox = function (){
+          doc.ready(function() {
+              $('#setImageLightbox').toggle();
+          });
+
+        }
+
+        doc.on('click', '.image', function(e) {
+
+            $(".image").removeClass("image_selected");
+
+            $(this).addClass("image_selected");
+
+            $('#FormHotelImage').val($(this).attr('data-imageId'));
+            hotel_image = $(this).attr('data-imageId');
+
+            var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
+            $('#selected_image').attr('src', selected_image);    
+        });
+        
+
+    };
+
+    return {
+      toggleLightbox: toggleLightbox
+    };
+
+}]);

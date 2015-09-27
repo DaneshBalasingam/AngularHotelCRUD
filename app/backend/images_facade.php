@@ -9,12 +9,15 @@
 	if ($method == 'POST') {
 
 		$image_file = $_FILES['image'];
-		//$image_file = $_FILES['name'];
+		
 		$image_id = Image::upload($db, $image_file);
+
+		$outp = Image::get_all($db);
 
 		$db->close_connection();
 		
-		echo $image_id;
+		echo json_encode($outp);
+		
 
 	} else {
 

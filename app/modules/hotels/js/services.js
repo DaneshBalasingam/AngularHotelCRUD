@@ -10,3 +10,4 @@ angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function(
     })
 
 }]); 
+

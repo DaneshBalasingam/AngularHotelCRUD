@@ -44,47 +44,18 @@ angular.module('myApp.hotels.controllers').controller('SingleHotelController', [
 }]);
 
 angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', 'Hotel', 'Image', 
-    'imageUploadService', 'imageLightboxService',
-    function($scope, $http, Hotel, Image, imageUploadService, imageLightboxService ) {
+    'imageLightboxService',
+    function($scope, $http, Hotel, Image, imageLightboxService ) {
 
     $scope.images = Image.query();
 
-    var hotel_image = " ";
-
-    /*$(document).on('click', '.image', function(e) {
-
-        $(".image").removeClass("image_selected");
-
-        $(this).addClass("image_selected");
-
-        $('#FormHotelImage').val($(this).attr('data-imageId'));
-        hotel_image = $(this).attr('data-imageId');
-
-        var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
-        $('#selected_image').attr('src', selected_image);    
-      });*/
-
-    imageLightboxService.toggleLightbox($(document), $scope);
-
-
-    $scope.saveImage = function () {
-
-        var imageUpload = document.querySelector("#image_upload");
-        var file = imageUpload.files[0];
-
-        imageUploadService.uploadImage(file).then(function(response){
-              $scope.images = response;
-            }, function(response) {
-
-        });
-        
-    }
+    var hotel_Image = imageLightboxService.initialize($(document), $scope, '#FormHotelImage');
 
     $scope.saveHotel=function(){
        
         if( $scope.hotelForm.$valid) {
-             $scope.hotel.imageId = hotel_image;
-            console.log($scope.hotel);
+             
+            $scope.hotel.imageId = hotel_Image.value;
             var test = Hotel.create($scope.hotel);
             console.log(test);
         } else {

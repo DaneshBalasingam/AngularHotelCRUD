@@ -21717,7 +21717,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/hotels.html',
     controller: 'ListHotelController'
   }).
-  when('/hotels/:itemId', {
+  when('/hotels/:hotelId', {
     templateUrl: 'modules/hotels/views/singleHotel.html',
     controller: 'SingleHotelController'
   }).
@@ -21729,7 +21729,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/adminHotel.html',
     controller: 'AdminHotelController'
   }).
-  when('/updateHotel/:itemId', {
+  when('/updateHotel/:hotelId', {
     templateUrl: 'modules/hotels/views/updateHotel.html',
     controller: 'UpdateHotelController'
   }).
@@ -21763,32 +21763,31 @@ angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['
 }]);  
 
 angular.module('myApp.hotels.controllers').controller('SingleHotelController', ['$scope', '$http','$routeParams', 
-  function($scope, $http, $routeParams) {
+  'Hotel', function($scope, $http, $routeParams, Hotel) {
 
-  $http.get('backend/hotels_facade.php').success(function(data) {
-    $scope.hotels = data;
-    $scope.currItem = $routeParams.itemId;
+    $http.get('backend/hotels_facade.php').success(function(data) {
+      $scope.hotels = data;
+      //$scope.hotels = Hotel.query();
+      $scope.currItem = $routeParams.hotelId;
 
-    if ($routeParams.itemId > 0) {
-      $scope.prevItem = Number($routeParams.itemId)-1;
-    } else {
-      $scope.prevItem = $scope.hotels.length-1;
-    }
+      if ($routeParams.hotelId > 0) {
+        $scope.prevItem = Number($routeParams.hotelId)-1;
+      } else {
+        $scope.prevItem = $scope.hotels.length-1;
+      }
 
-    if ($routeParams.itemId < $scope.hotels.length-1) {
-      $scope.nextItem = Number($routeParams.itemId)+1;
-    } else {
-      $scope.nextItem = 0;
-    }
+      if ($routeParams.hotelId < $scope.hotels.length-1) {
+        $scope.nextItem = Number($routeParams.hotelId)+1;
+      } else {
+        $scope.nextItem = 0;
+      }
 
-  });
+    });
 }]);
 
 angular.module('myApp.hotels.controllers').controller('CreateHotelController', ['$scope', '$http', 'Hotel', 'Image', 
     'imageLightboxService',
     function($scope, $http, Hotel, Image, imageLightboxService ) {
-
-    $scope.images = Image.query();
 
     var hotel_Image = imageLightboxService.initialize($(document), $scope, '#FormHotelImage');
 
@@ -21797,8 +21796,8 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
         if( $scope.hotelForm.$valid) {
              
             $scope.hotel.imageId = hotel_Image.value;
-            var test = Hotel.create($scope.hotel);
-            console.log(test);
+            Hotel.create($scope.hotel);
+            
         } else {
           console.log('unable to save. Validation error');
         }
@@ -21810,10 +21809,16 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
 }]);
 
 
-angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', '$routeParams', 
-  function($scope, $http,  $routeParams) {
+angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', '$routeParams', 'Hotel',
+  'imageLightboxService', 
+  function($scope, $http,  $routeParams, Hotel, imageLightboxService) {
 
-    $scope.updateHotel=function(){
+    //console.log($routeParams.hotelId);
+    $scope.hotel = Hotel.get({ id: $routeParams.hotelId });
+    //console.log($scope.hotel);
+    var hotel_Image = imageLightboxService.initialize($(document), $scope, '#FormHotelImage');
+
+    /*$scope.updateHotel=function(){
         if( $scope.hotelForm.$valid) {
 
             var url = 'backend/hotels_facade.php/8';
@@ -21844,7 +21849,7 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
         } else {
           console.log('unable to save. Validation error');
         }       
-    }
+    }*/
 
 
 }]);
@@ -21864,13 +21869,13 @@ angular.module('myApp.hotels.services', []);
 
 angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function($resource) {
 
-    return $resource('backend/hotels_facade.php', {}, {
+    return $resource('backend/hotels_facade.php/:id', {id:'@id'}, {
+        get: { method: 'GET', isArray: true  },
         query: { method: 'GET', isArray: true },
         create: { method: 'POST'}
     })
 
 }]); 
-
 
 angular.module('myApp.images',['ngRoute', 'ngResource', 'myApp.images.controllers', 'myApp.images.services']);
 
@@ -21905,9 +21910,13 @@ angular.module('myApp.images.services').factory('Image', ['$resource', function(
 
 }]);
 
-angular.module('myApp.images.services').factory('imageLightboxService', ['$http', function($http) {
+angular.module('myApp.images.services').factory('imageLightboxService', ['$http', 'Image', function($http, Image) {
 
+    var images = Image.query();
+    
     var initialize = function(doc, scp, imageFormName) {
+
+        scp.images = images;
 
         scp.setImage = function (){
           doc.ready(function() {

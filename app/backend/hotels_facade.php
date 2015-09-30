@@ -15,12 +15,8 @@
 		           $input->shortname, $input->description, $input->excerpt, 
 		           $input->imageId);
 
-		/*Hotel::create($db, $_POST['name'], $_POST['city'], $_POST['region'], 
-		           $_POST['shortname'], $_POST['description'], $_POST['excerpt'], 
-		           $_POST['image']);*/
 		$db->close_connection();
-		echo "saved";
-		//echo $_POST['name'];	
+		echo "saved";	
 
 	} elseif ($method == 'PUT') {
 		$image_file = $_FILES['image'];
@@ -34,12 +30,24 @@
 		echo "PUT";
 
 	}else {
-		
-		$outp = Hotel::get_all($db);
-	
-		$db->close_connection();
 
-		echo json_encode($outp);
+		if(empty($_SERVER['PATH_INFO'])) {
+			$outp = Hotel::get_all($db);
+	
+			$db->close_connection();
+
+			echo json_encode($outp);
+			
+		} else {
+			$request = explode('/', $_SERVER['PATH_INFO']);
+			//echo $request[1];
+			$outp = Hotel::get_By_Id($db, $request[1]);
+	
+			$db->close_connection();
+
+			echo json_encode($outp);
+		}	
+
 
 	}
 

@@ -10,9 +10,13 @@ angular.module('myApp.images.services').factory('Image', ['$resource', function(
 
 }]);
 
-angular.module('myApp.images.services').factory('imageLightboxService', ['$http', function($http) {
+angular.module('myApp.images.services').factory('imageLightboxService', ['$http', 'Image', function($http, Image) {
 
+    var images = Image.query();
+    
     var initialize = function(doc, scp, imageFormName) {
+
+        scp.images = images;
 
         scp.setImage = function (){
           doc.ready(function() {

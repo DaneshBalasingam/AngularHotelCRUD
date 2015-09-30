@@ -24,7 +24,7 @@ class Hotel {
 
     public static function get_all($db) {
 
-    	$result = $db->query("SELECT hotels.id, hotels.region, hotels.city, 
+    	$result = $db->query("SELECT hotels.id, hotels.name, hotels.region, hotels.city, 
     		                  hotels.shortname, hotels.description, hotels.excerpt, 
     		                  images.name as image_name  
 							  FROM hotels 
@@ -33,6 +33,24 @@ class Hotel {
     	
 	
 		return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function get_By_Id($db, $Id) {
+
+    	$stmt = $db->get_connection()
+    	             ->prepare("SELECT hotels.id, hotels.name, hotels.region, hotels.city, 
+    		                  hotels.shortname, hotels.description, hotels.excerpt, 
+    		                  hotels.image_id, images.name as image_name  
+							  FROM hotels 
+							  INNER JOIN images 
+							  ON hotels.image_id = images.id 
+							  WHERE hotels.id = :hotelId");
+    	
+    	$stmt->bindParam(':hotelId', $Id);
+ 
+    	$stmt->execute();	
+	
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function create($db, $hotel_name, $hotel_city, $hotel_region, $hotel_shortname, 

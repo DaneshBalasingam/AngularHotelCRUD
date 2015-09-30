@@ -7,7 +7,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/hotels.html',
     controller: 'ListHotelController'
   }).
-  when('/hotels/:itemId', {
+  when('/hotels/:hotelId', {
     templateUrl: 'modules/hotels/views/singleHotel.html',
     controller: 'SingleHotelController'
   }).
@@ -19,7 +19,7 @@ angular.module('myApp.hotels').config(['$routeProvider', function($routeProvider
     templateUrl: 'modules/hotels/views/adminHotel.html',
     controller: 'AdminHotelController'
   }).
-  when('/updateHotel/:itemId', {
+  when('/updateHotel/:hotelId', {
     templateUrl: 'modules/hotels/views/updateHotel.html',
     controller: 'UpdateHotelController'
   }).

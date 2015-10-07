@@ -51,10 +51,9 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
     var hotel_Image = imageLightboxService.initialize($(document), $scope, '#FormHotelImage');
 
     $scope.saveHotel=function(){
-       
         if( $scope.hotelForm.$valid) {
-             
-            $scope.hotel.imageId = hotel_Image.value;
+            
+            $scope.hotel.imageId = hotel_Image.id;
             Hotel.create($scope.hotel);
             
         } else {
@@ -67,49 +66,28 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
   
 }]);
 
+angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', '$routeParams', 'Hotel', 'Image', 
+    'imageLightboxService',
+    function($scope, $http, $routeParams, Hotel, Image, imageLightboxService ) {
 
-angular.module('myApp.hotels.controllers').controller('UpdateHotelController', ['$scope', '$http', '$routeParams', 'Hotel',
-  'imageLightboxService', 
-  function($scope, $http,  $routeParams, Hotel, imageLightboxService) {
-
-    //console.log($routeParams.hotelId);
-    $scope.hotel = Hotel.get({ id: $routeParams.hotelId });
-    //console.log($scope.hotel);
     var hotel_Image = imageLightboxService.initialize($(document), $scope, '#FormHotelImage');
 
-    /*$scope.updateHotel=function(){
-        if( $scope.hotelForm.$valid) {
+    Hotel.get({ id: $routeParams.hotelId },function(hotel) {
 
-            var url = 'backend/hotels_facade.php/8';
+        $scope.hotel = hotel[0];
+        hotel_Image.id = hotel[0].image_id;
+        hotel_Image.name = hotel[0].image_name;
+        image_url = "backend/uploads/" + hotel_Image.name;
+        $('#selected_image').attr("src", image_url);
+        imageLightboxService.setImage($(document), $scope, hotel_Image);
 
-            var imageUpload = document.querySelector("#FormHotelImage");
-            var file = imageUpload.files[0];
-
-            var fd = new FormData();
-            fd.append('hotel_id', $routeParams.itemId);
-            fd.append('name', $scope.hotel.name);
-            fd.append('city', $scope.hotel.city);
-            fd.append('region', $scope.hotel.region);
-            fd.append("image",file, file.name);
-            fd.append('shortname', $scope.hotel.shortname);
-            fd.append('description', $scope.hotel.description);
-            fd.append('excerpt', $scope.hotel.excerpt);
-            
-            $http.put(url, fd, {
-              transformRequest: angular.identity,
-              headers: {'Content-Type': undefined}
-            }).then(function(response) {
-               console.log(response.data);
-            }, function(response) {
-              
-            });
-           
-        
-        } else {
-          console.log('unable to save. Validation error');
-        }       
-    }*/
+    });
 
 
+
+
+  
 }]);
+
+
 

@@ -19,15 +19,20 @@
 		echo "saved";	
 
 	} elseif ($method == 'PUT') {
-		$image_file = $_FILES['image'];
-		$target_file = $image_filename = Image::upload($image_file);
+		$requestGet = explode('/', $_SERVER['PATH_INFO']);
+		$id = $requestGet[1];
 
-		Hotel::update($db, $POST['hotel_id'], $_POST['name'], $_POST['city'], $_POST['region'], 
-		           $_POST['shortname'], $_POST['description'], $_POST['excerpt'], 
-		           $target_file);
+		echo "test";
+
+		/*$request = file_get_contents('php://input');
+		$input = json_decode($request);
+
+		Hotel::update($db, $id, $input->name, $input->city, $input->region, 
+		           $input->shortname, $input->description, $input->excerpt, 
+		           $input->image_id);
 
 		$db->close_connection();
-		echo "PUT";
+		echo "PUT";*/
 
 	}else {
 
@@ -40,7 +45,7 @@
 			
 		} else {
 			$request = explode('/', $_SERVER['PATH_INFO']);
-			//echo $request[1];
+			
 			$outp = Hotel::get_By_Id($db, $request[1]);
 	
 			$db->close_connection();

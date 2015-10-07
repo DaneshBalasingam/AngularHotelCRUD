@@ -75,12 +75,12 @@ class Hotel {
 	}
 
 	public static function update ($db, $hotel_id, $hotel_name, $hotel_city, $hotel_region, $hotel_shortname, 
-    	                          $hotel_desc, $hotel_excerpt, $image_name) {
+    	                          $hotel_desc, $hotel_excerpt, $image_id) {
 
 		$stmt = $db->get_connection()
 		        ->prepare("UPDATE hotels
 		        	       SET name = :name, city = :city, region = :region, shortname = :shortname,
-		        	           description = :description, excerpt = :excerpt, image_name = :image_name 
+		        	           description = :description, excerpt = :excerpt, image_id = :image_id 
 		        	       WHERE id = :hotel_id");
 
 		$stmt->bindParam(':name', $hotel_name);
@@ -89,7 +89,7 @@ class Hotel {
 		$stmt->bindParam(':shortname', $hotel_shortname);
 		$stmt->bindParam(':description', $hotel_desc);
 		$stmt->bindParam(':excerpt', $hotel_excerpt);
-		$stmt->bindParam(':image_name', $image_name);
+		$stmt->bindParam(':image_id', $image_id);
 		$stmt->bindParam(':hotel_id', $hotel_id);
 
 		$stmt->execute();

@@ -55,7 +55,8 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
 
         function Image()
         {
-          this.value = " ";
+          this.id = " ";
+          this.name = " ";
         }
 
         var Image = new Image();
@@ -67,14 +68,31 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
             $(this).addClass("image_selected");
 
             $(imageFormName).val($(this).attr('data-imageId'));
-            Image.value = $(this).attr('data-imageId');
+            Image.id = $(this).attr('data-imageId');
 
             var selected_image = 'backend/uploads/' + $(this).attr('data-imageName');
             $('#selected_image').attr('src', selected_image);    
         });
+
         
         return Image;
     };
+
+    var setImage = function (doc, scp, Image) {
+        console.log(Image);
+        /*doc.ready(function() {
+              console.log(Image.id);
+              $(".image").each(function() {
+                  
+                  if( $( this ).attr('data-imageId') == Image.id ) {
+
+                    $(this).addClass("image_selected");
+                  }
+              });
+
+              
+        });*/
+    }
 
     var uploadImage = function (file){
 
@@ -96,7 +114,8 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
 
     return {
       initialize: initialize,
-      uploadImage: uploadImage
+      uploadImage: uploadImage,
+      setImage: setImage
     };
 
 }]);

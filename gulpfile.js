@@ -5,11 +5,11 @@ var	uglify = require('gulp-uglify');
 gulp.task('scripts', function(){
 
 	return gulp.src([
+		'app/lib/jquery/jquery.min.js',
 		'app/lib/angular/angular.js',
 		'app/lib/angular/angular-route.js',
 		'app/lib/angular/angular-ui-router.min.js',
 		'app/lib/angular/angular-resource.min.js',
-		'app/lib/jquery/jquery.min.js',
 		'app/js/app.js',
 		'app/modules/hotels/hotelModule.js',
 		'app/modules/hotels/js/*.js',

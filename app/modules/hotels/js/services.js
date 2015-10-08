@@ -8,7 +8,8 @@ angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function(
         get: { method: 'GET', isArray: true },
         query: { method: 'GET', isArray: true },
         create: { method: 'POST'},
-        update: { method: 'PUT'}
+        update: { method: 'PUT'},
+        remove: { method: 'DELETE' }
     })
 
 }]); 

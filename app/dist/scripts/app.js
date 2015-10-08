@@ -21757,7 +21757,23 @@ angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['
     $scope.hotels = Hotel.query();
 
     $scope.editHotel=function(hotelId){
-      $location.path('/updateHotel/' + hotelId);
+
+        $location.path('/updateHotel/' + hotelId);
+    }
+
+    $scope.deleteHotel = function(hotelId){
+
+        /*if (popupService.showPopup('Really delete this?')) {
+            post.$delete(function() {
+                $state.go('admin.postViewAll',undefined,{
+                    reload:true
+                });
+            });
+        }*/
+        Hotel.delete({ id: hotelId}, function(){
+            
+        });
+
     }
 
 }]);  
@@ -21767,7 +21783,7 @@ angular.module('myApp.hotels.controllers').controller('SingleHotelController', [
 
     $http.get('backend/hotels_facade.php').success(function(data) {
       $scope.hotels = data;
-      //$scope.hotels = Hotel.query();
+     
       $scope.currItem = $routeParams.hotelId;
 
       if ($routeParams.hotelId > 0) {
@@ -21794,7 +21810,7 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
     $scope.saveHotel=function(){
         if( $scope.hotelForm.$valid) {
             
-            $scope.hotel.imageId = hotel_Image.id;
+            $scope.hotel.image_id = hotel_Image.id;
             Hotel.create($scope.hotel);
             
         } else {
@@ -21824,6 +21840,20 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
 
     });
 
+    $scope.updateHotel = function(){
+        if( $scope.hotelForm.$valid) {
+            
+            $scope.hotel.image_id = hotel_Image.id;
+            
+            $scope.hotel.$update({ id: $routeParams.hotelId }, function(data){
+                console.log(data);
+            });
+        } else {
+          console.log('unable to save. Validation error');
+        }
+
+    }
+
 
 
 
@@ -21851,7 +21881,8 @@ angular.module('myApp.hotels.services').factory('Hotel', ['$resource', function(
         get: { method: 'GET', isArray: true },
         query: { method: 'GET', isArray: true },
         create: { method: 'POST'},
-        update: { method: 'PUT'}
+        update: { method: 'PUT'},
+        remove: { method: 'DELETE' }
     })
 
 }]); 
@@ -21958,9 +21989,9 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
     };
 
     var setImage = function (doc, scp, Image) {
-        console.log(Image);
-        /*doc.ready(function() {
-              console.log(Image.id);
+        
+        doc.ready(function() {
+              
               $(".image").each(function() {
                   
                   if( $( this ).attr('data-imageId') == Image.id ) {
@@ -21970,7 +22001,7 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
               });
 
               
-        });*/
+        });
     }
 
     var uploadImage = function (file){

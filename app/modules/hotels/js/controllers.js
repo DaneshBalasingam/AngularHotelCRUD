@@ -16,7 +16,23 @@ angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['
     $scope.hotels = Hotel.query();
 
     $scope.editHotel=function(hotelId){
-      $location.path('/updateHotel/' + hotelId);
+
+        $location.path('/updateHotel/' + hotelId);
+    }
+
+    $scope.deleteHotel = function(hotelId){
+
+        /*if (popupService.showPopup('Really delete this?')) {
+            post.$delete(function() {
+                $state.go('admin.postViewAll',undefined,{
+                    reload:true
+                });
+            });
+        }*/
+        Hotel.delete({ id: hotelId}, function(){
+            
+        });
+
     }
 
 }]);  
@@ -26,7 +42,7 @@ angular.module('myApp.hotels.controllers').controller('SingleHotelController', [
 
     $http.get('backend/hotels_facade.php').success(function(data) {
       $scope.hotels = data;
-      //$scope.hotels = Hotel.query();
+     
       $scope.currItem = $routeParams.hotelId;
 
       if ($routeParams.hotelId > 0) {
@@ -53,7 +69,7 @@ angular.module('myApp.hotels.controllers').controller('CreateHotelController', [
     $scope.saveHotel=function(){
         if( $scope.hotelForm.$valid) {
             
-            $scope.hotel.imageId = hotel_Image.id;
+            $scope.hotel.image_id = hotel_Image.id;
             Hotel.create($scope.hotel);
             
         } else {
@@ -82,6 +98,20 @@ angular.module('myApp.hotels.controllers').controller('UpdateHotelController', [
         imageLightboxService.setImage($(document), $scope, hotel_Image);
 
     });
+
+    $scope.updateHotel = function(){
+        if( $scope.hotelForm.$valid) {
+            
+            $scope.hotel.image_id = hotel_Image.id;
+            
+            $scope.hotel.$update({ id: $routeParams.hotelId }, function(data){
+                console.log(data);
+            });
+        } else {
+          console.log('unable to save. Validation error');
+        }
+
+    }
 
 
 

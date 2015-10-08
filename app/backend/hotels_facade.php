@@ -13,18 +13,16 @@
 
 		Hotel::create($db, $input->name, $input->city, $input->region, 
 		           $input->shortname, $input->description, $input->excerpt, 
-		           $input->imageId);
+		           $input->image_id);
 
 		$db->close_connection();
 		echo "saved";	
 
 	} elseif ($method == 'PUT') {
-		$requestGet = explode('/', $_SERVER['PATH_INFO']);
-		$id = $requestGet[1];
 
-		echo "test";
+		$id = explode('/', $_SERVER['PATH_INFO'])[1];
 
-		/*$request = file_get_contents('php://input');
+		$request = file_get_contents('php://input');
 		$input = json_decode($request);
 
 		Hotel::update($db, $id, $input->name, $input->city, $input->region, 
@@ -32,7 +30,11 @@
 		           $input->image_id);
 
 		$db->close_connection();
-		echo "PUT";*/
+		echo "PUT";
+
+	} elseif ($method == 'DELETE') {
+
+		$id = explode('/', $_SERVER['PATH_INFO'])[1];
 
 	}else {
 

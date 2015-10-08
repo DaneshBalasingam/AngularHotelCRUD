@@ -79,9 +79,9 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
     };
 
     var setImage = function (doc, scp, Image) {
-        console.log(Image);
-        /*doc.ready(function() {
-              console.log(Image.id);
+        
+        doc.ready(function() {
+              
               $(".image").each(function() {
                   
                   if( $( this ).attr('data-imageId') == Image.id ) {
@@ -91,7 +91,7 @@ angular.module('myApp.images.services').factory('imageLightboxService', ['$http'
               });
 
               
-        });*/
+        });
     }
 
     var uploadImage = function (file){

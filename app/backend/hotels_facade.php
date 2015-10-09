@@ -36,6 +36,12 @@
 
 		$id = explode('/', $_SERVER['PATH_INFO'])[1];
 
+		Hotel::remove($db, $id);
+
+		$db->close_connection();
+		echo "DELETED";
+
+
 	}else {
 
 		if(empty($_SERVER['PATH_INFO'])) {

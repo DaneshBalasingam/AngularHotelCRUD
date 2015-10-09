@@ -21763,15 +21763,8 @@ angular.module('myApp.hotels.controllers').controller('AdminHotelController', ['
 
     $scope.deleteHotel = function(hotelId){
 
-        /*if (popupService.showPopup('Really delete this?')) {
-            post.$delete(function() {
-                $state.go('admin.postViewAll',undefined,{
-                    reload:true
-                });
-            });
-        }*/
-        Hotel.delete({ id: hotelId}, function(){
-            
+        Hotel.delete({ id: hotelId}, function(data){
+            $scope.hotels = Hotel.query();
         });
 
     }

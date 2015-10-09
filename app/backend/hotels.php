@@ -99,7 +99,18 @@ class Hotel {
 
 	}
 
+	public static function remove ($db, $hotel_id) {
 
+		$stmt = $db->get_connection()
+		        ->prepare("DELETE FROM hotels WHERE id = :hotel_id");
+
+		$stmt->bindParam(':hotel_id', $hotel_id);
+
+		$stmt->execute();
+
+		return 'success';
+
+	}
 }
 
 

@@ -1,1 +1,1 @@
-This is an ongoing project. It follows best angular.js industry practices. Current functionality implemented is search hotel by region or city. Yet to be implemented, create, update and delete functionality for hotels and admin authentication and CRUD.
+This is an ongoing project. It follows best angular.js industry practices. Current functionality implemented is search hotel by region or city, create, update and delete functionality for hotels. Also image upload for Hotel completed. Yet to be implemented user CRUD and authentication.

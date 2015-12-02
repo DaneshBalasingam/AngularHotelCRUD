@@ -4,6 +4,12 @@
 
 #close_image_lightbox {
 	cursor: pointer;
+	font-size: 30px;
+	background-color: red;
+	border-radius: 25px;
+	width: 50px;
+	padding: 10px;
+	text-align: center;
 }
 
 #setImageLightbox {

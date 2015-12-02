@@ -1,4 +1,4 @@
-<div class="row" ng-controller="CreateHotelController">
+<div class="row form-wrapper" ng-controller="CreateHotelController">
     <div class="col-xs-8">
         <form name="hotelForm" ng-submit="saveHotel()" class="form-horizontal" novalidate role="form">
 			<div class="form-group" ng-class="{'has-error':hotelForm.name.$dirty && hotelForm.name.$invalid}">
@@ -58,7 +58,6 @@
 			</div>           
         </form>		  
 	</div>	  
-	<div>{{ hotel }}</div>
 </div>
 <div id="setImageLightbox">
   <div ng-include="'modules/images/views/uploadImageLightbox.html'"></div>

@@ -127,6 +127,23 @@ p {
   min-height: 100vh;
 }
 
+.menu {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.menu li {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: orange;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 25px;
+  padding: 10px;
+
+}
+
 
 
 
@@ -209,6 +226,7 @@ Hotel list
 *****************/
 
 #hotelListDisplay {
+
   margin-top: 20px;
 }
 .hotelList {
@@ -370,13 +388,51 @@ Hotel list
     background: #09576D;
 }
 
+/*****************
 
+Admin Hotel 
+
+*****************/
+
+#adminHotelListDisplay {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+/*****************
+
+Create Hotel 
+
+*****************/
+
+#set_image_button {
+   text-align: center;
+   font-size: 22px;
+   background-color: green;
+   border-radius: 25px;
+   padding: 10px;
+}
+
+.form-wrapper {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
 #set_image_button {
 	cursor: pointer;
 }
 
 #close_image_lightbox {
 	cursor: pointer;
+	font-size: 30px;
+	background-color: red;
+	border-radius: 25px;
+	width: 50px;
+	padding: 10px;
+	text-align: center;
 }
 
 #setImageLightbox {

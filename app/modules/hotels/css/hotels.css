@@ -77,6 +77,7 @@ Hotel list
 *****************/
 
 #hotelListDisplay {
+
   margin-top: 20px;
 }
 .hotelList {
@@ -238,3 +239,36 @@ Hotel list
     background: #09576D;
 }
 
+/*****************
+
+Admin Hotel 
+
+*****************/
+
+#adminHotelListDisplay {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+/*****************
+
+Create Hotel 
+
+*****************/
+
+#set_image_button {
+   text-align: center;
+   font-size: 22px;
+   background-color: green;
+   border-radius: 25px;
+   padding: 10px;
+}
+
+.form-wrapper {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,1 +1,1 @@
-This is an ongoing project. It follows best angular.js industry practices. Current functionality implemented is search hotel by region or city, create, update and delete functionality for hotels. Also image upload for Hotel completed. Yet to be implemented user CRUD and authentication.
+This follows best angular.js industry practices. It is a study in Dependency Injection as well modularity uing AngularJS. Current functionality implemented is search hotel by region or city, create, update and delete functionality for hotels. Also image upload for Hotel completed. 
